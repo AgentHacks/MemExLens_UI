@@ -16,7 +16,6 @@ export interface Settings {
 export interface StorageData {
   browsingHistory: BrowsingHistoryItem[];
   settings: Settings;
-  authToken?: string; // Optional auth token
 }
 
 // API response types
