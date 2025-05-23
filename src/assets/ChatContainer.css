@@ -1,0 +1,19 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 350px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 14px;
+}
