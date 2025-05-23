@@ -1,5 +1,5 @@
 // Import services
-import { storePageContent } from "../services/ContentServices";
+import { storePageContent } from "../services/contentServices";
 import {
   BrowsingHistoryItem,
   Settings,
@@ -178,7 +178,7 @@ chrome.runtime.onMessage.addListener(
             try {
               // Import here to avoid circular dependencies
               const { searchContent } = await import(
-                "../services/ContentServices.ts"
+                "../services/contentServices.ts"
               );
               const serverResults = await searchContent(query);
 
