@@ -5,7 +5,6 @@ type ChatContextType = {
   state: ChatState;
   dispatch: React.Dispatch<ChatAction>;
   sendMessage: (content: string) => Promise<void>;
-  isLoggedIn: boolean | null;
 };
 
 export const ChatContext = createContext<ChatContextType>({
@@ -16,5 +15,4 @@ export const ChatContext = createContext<ChatContextType>({
   },
   dispatch: () => null,
   sendMessage: async () => {},
-  isLoggedIn: null,
 });

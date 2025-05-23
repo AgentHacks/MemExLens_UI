@@ -1,23 +1,12 @@
-import React, { useReducer, ReactNode, useEffect, useState } from "react";
+import React, { useReducer, ReactNode } from "react";
 import { chatReducer, initialState } from "../reducers/chatReducer";
 import { ChatContext } from "./ChatContext";
 import { Message } from "../types/chatTypes";
-import { isAuthenticated } from "../services/authServices";
 
 export const ChatProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-
-  // Check authentication status on mount
-  useEffect(() => {
-    const checkAuth = async () => {
-      const authStatus = await isAuthenticated();
-      setIsLoggedIn(authStatus);
-    };
-    checkAuth();
-  }, []);
 
   // Update the sendMessage function to communicate with the background script
   const sendMessage = async (content: string) => {
@@ -133,7 +122,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <ChatContext.Provider value={{ state, dispatch, sendMessage, isLoggedIn }}>
+    <ChatContext.Provider value={{ state, dispatch, sendMessage }}>
       {children}
     </ChatContext.Provider>
   );
