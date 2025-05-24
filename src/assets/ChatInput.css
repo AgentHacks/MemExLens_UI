@@ -1,46 +1,74 @@
 .chat-input-container {
   display: flex;
-  padding: 12px;
-  background-color: #ffffff;
-  border-top: 1px solid #e0e0e0;
+  padding: 16px;
+  background: rgba(20, 20, 20, 0.9); /* Darker, more opaque background */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* More visible border */
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
 }
 
 .chat-input {
   flex: 1;
-  border: 1px solid #e0e0e0;
-  border-radius: 20px;
-  padding: 10px 16px;
-  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4); /* More visible border */
+  border-radius: 24px;
+  padding: 14px 20px;
+  font-size: 15px;
   resize: none;
   outline: none;
   max-height: 120px;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
+  background: rgba(40, 40, 40, 0.9); /* Darker, more opaque background */
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* More visible shadow */
+  line-height: 1.4;
+}
+
+.chat-input::placeholder {
+  color: rgba(255, 255, 255, 0.7); /* More visible placeholder */
 }
 
 .chat-input:focus {
-  border-color: #2196f3;
+  border-color: #bb86fc; /* Matching accent color */
+  box-shadow: 0 0 15px rgba(187, 134, 252, 0.5); /* Matching glow */
+  background: rgba(50, 50, 50, 0.9); /* Slightly lighter when focused */
 }
 
 .send-button {
-  background-color: #2196f3;
+  background: linear-gradient(135deg, #8e54e9 0%, #4776e6 100%); /* Stronger gradient */
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin-left: 8px;
+  width: 46px;
+  height: 46px;
+  margin-left: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(71, 118, 230, 0.5); /* More visible shadow */
 }
 
 .send-button:hover {
-  background-color: #1976d2;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25);
+}
+
+.send-button:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .send-button:disabled {
-  background-color: #e0e0e0;
+  background: rgba(255, 255, 255, 0.2);
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.send-button svg {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
 }

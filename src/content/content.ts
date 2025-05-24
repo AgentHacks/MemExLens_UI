@@ -1,42 +1,28 @@
+import { Readability } from "@mozilla/readability";
 // Define interface for extracted page data
 interface ExtractedData {
   url: string;
   content: string;
   timestamp: number;
-  // title field removed as it's not used in the new structure
 }
 
-// Helper function to extract main content from the page
+/**
+ * Helper function to extract main content from the page using Mozilla's Readability
+ */
 function extractPageContent(): ExtractedData {
   // Get the page URL
   const url = window.location.href;
 
-  // Extract main content - prioritize article content
-  let content = "";
+  // Clone the current document to avoid modifying the live DOM
+  const clonedDoc = document.cloneNode(true) as Document;
 
-  // Try to find main article content
-  const articleElements = document.querySelectorAll<HTMLElement>(
-    'article, [role="main"], main, .main-content, #main-content'
-  );
-  if (articleElements.length > 0) {
-    // Use the first article element found
-    const articleText = articleElements[0].textContent;
-    content = articleText ? articleText : "";
-  } else {
-    // Fallback: get content from body, excluding scripts, styles, and navigation
-    const bodyClone = document.body.cloneNode(true) as HTMLBodyElement;
+  // Parse the document using Readability
+  const article = new Readability(clonedDoc).parse();
 
-    // Remove script, style, nav, footer, and header elements
-    const elementsToRemove = bodyClone.querySelectorAll(
-      "script, style, nav, footer, header"
-    );
-    elementsToRemove.forEach((el) => el.remove());
+  // Get clean, readable content (fallback to empty string if nothing is parsed)
+  let content = article?.textContent?.trim() || "";
 
-    const bodyText = bodyClone.textContent;
-    content = bodyText ? bodyText : "";
-  }
-
-  // Clean up the content (remove extra whitespace)
+  // Clean up the content (normalize whitespace)
   content = content.replace(/\s+/g, " ").trim();
 
   return {

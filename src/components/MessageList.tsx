@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import MessageItem from "./chat/MessageItem";
 import { Message } from "../types/chatTypes";
-import "/src/assets/MessageItem.css";
+import "/src/assets/MessageList.css";
 
 type MessageListProps = {
   messages: Message[];
@@ -20,7 +20,13 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
     <div className="message-list">
       {messages.length === 0 ? (
         <div className="empty-state">
-          <p>No messages yet. Start a conversation!</p>
+          <p>✨ Welcome to MemExLens! ✨</p>
+          <p>Your personal browsing assistant</p>
+          <ul style={{ textAlign: "left", paddingInlineStart: "20px" }}>
+            <li>"Just in what you remember..."</li>
+            <li>"Ask anything that you read somewhere..."</li>
+            <li>"Forgot where you read the that thing..."</li>
+          </ul>
         </div>
       ) : (
         messages.map((message) => (

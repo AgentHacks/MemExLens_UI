@@ -33,67 +33,9 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
               return;
             }
 
-            // Format the search results into a readable response
-            if (response && response.results) {
-              if (response.results.length === 0) {
-                resolve(
-                  "I couldn't find any relevant information in your browsing history."
-                );
-              } else {
-                // Enhanced response formatting for LLM-processed results
-                const results = response.results;
-
-                // Check if this is a server response with LLM formatting
-                if (results[0].relevanceScore !== undefined) {
-                  // If the server already provided a formatted response, use it
-                  if (response.formattedResponse) {
-                    resolve(response.formattedResponse);
-                  } else {
-                    // Format multiple results
-                    let formattedResponse = `I found ${results.length} relevant pages in your browsing history:\n\n`;
-
-                    results.slice(0, 3).forEach(
-                      (
-                        result: {
-                          data: {
-                            url: string;
-                            scrapedTextData: string;
-                            userId: string;
-                          };
-                          timestamp: string;
-                          snippets?: string[];
-                        },
-                        index: number
-                      ) => {
-                        formattedResponse += `${index + 1}. **Page ${
-                          index + 1
-                        }**\n`;
-                        formattedResponse += `   URL: ${result.data.url}\n`;
-
-                        // Use snippets if available
-                        if (result.snippets && result.snippets.length > 0) {
-                          formattedResponse += `   Relevant content: "${result.snippets[0]}"\n\n`;
-                        } else {
-                          formattedResponse += `   Preview: "${result.data.scrapedTextData.substring(
-                            0,
-                            150
-                          )}..."\n\n`;
-                        }
-                      }
-                    );
-
-                    resolve(formattedResponse);
-                  }
-                } else {
-                  // Legacy formatting for local search results
-                  const topResult = results[0];
-                  resolve(
-                    `I found this in your browsing history:\n\nURL: ${
-                      topResult.data.url
-                    }\n\n${topResult.data.scrapedTextData.substring(0, 200)}...`
-                  );
-                }
-              }
+            // Handle the new response format which just has a data field
+            if (response && response.data) {
+              resolve(response.data);
             } else {
               resolve(
                 "I received your message but couldn't process it properly."

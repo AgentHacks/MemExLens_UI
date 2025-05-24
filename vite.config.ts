@@ -13,12 +13,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
+        sidepanel: resolve(__dirname, "sidepanel.html"),
         background: resolve(__dirname, "src/background/background.ts"),
         content: resolve(__dirname, "src/content/content.ts"),
       },
       output: {
         entryFileNames: (chunk) => {
-          return chunk.name === "main"
+          return chunk.name === "main" || chunk.name === "sidepanel"
             ? "assets/[name]-[hash].js"
             : "[name].js";
         },
