@@ -63,9 +63,9 @@ type ContentExtractedMessage = {
   action: "contentExtracted";
   data: {
     url: string;
-    title: string;
     content: string;
     timestamp: number;
+    // title field removed
   };
 };
 
@@ -94,7 +94,7 @@ chrome.runtime.onMessage.addListener(
   (message: Message, _sender, sendResponse) => {
     // Handle extracted content from content script
     if (message.action === "contentExtracted") {
-      const { url, title, content, timestamp } = message.data;
+      const { url, content, timestamp } = message.data; // title removed from destructuring
 
       // Get current browsing history and settings from storage
       chrome.storage.local.get(
@@ -111,10 +111,12 @@ chrome.runtime.onMessage.addListener(
 
           // Create history item
           const historyItem: BrowsingHistoryItem = {
-            url,
-            title,
-            content: content.substring(0, 1000), // Limit content size for local storage
-            timestamp,
+            timestamp: new Date(timestamp).toISOString(),
+            data: {
+              userId: "user123", // You might want to replace this with actual user ID
+              scrapedTextData: content.substring(0, 1000), // Limit content size for local storage
+              url,
+            },
           };
 
           // Add new entry to browsing history
@@ -133,10 +135,12 @@ chrome.runtime.onMessage.addListener(
             try {
               // Send the full content to the server (not truncated)
               const serverHistoryItem: BrowsingHistoryItem = {
-                url,
-                title,
-                content, // Send full content to server
-                timestamp,
+                timestamp: new Date(timestamp).toISOString(),
+                data: {
+                  userId: "user123", // You might want to replace this with actual user ID
+                  scrapedTextData: content, // Send full content to server
+                  url,
+                },
               };
 
               await storePageContent(serverHistoryItem);
@@ -231,10 +235,9 @@ function performLocalSearch(
   sendResponse: (response?: { results: BrowsingHistoryItem[] }) => void
 ) {
   const searchResults = history.filter((item) => {
-    return (
-      item.title.toLowerCase().includes(query.toLowerCase()) ||
-      item.content.toLowerCase().includes(query.toLowerCase())
-    );
+    return item.data.scrapedTextData
+      .toLowerCase()
+      .includes(query.toLowerCase());
   });
 
   sendResponse({ results: searchResults });

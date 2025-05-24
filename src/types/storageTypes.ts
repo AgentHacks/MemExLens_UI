@@ -1,9 +1,11 @@
 // Define interfaces for our data structures
 export interface BrowsingHistoryItem {
-  url: string;
-  title: string;
-  content: string;
-  timestamp: number;
+  timestamp: string;
+  data: {
+    userId: string;
+    scrapedTextData: string;
+    url: string;
+  };
 }
 
 export interface Settings {
@@ -25,10 +27,12 @@ export interface SearchResponse {
 }
 
 export interface SearchResult {
-  url: string;
-  title: string;
-  content: string;
-  timestamp: number;
-  relevanceScore: number; // Added for vector search relevance
+  timestamp: string;
+  data: {
+    userId: string;
+    scrapedTextData: string;
+    url: string;
+  };
+  relevanceScore?: number; // Added for vector search relevance
   snippets?: string[]; // Relevant text snippets
 }

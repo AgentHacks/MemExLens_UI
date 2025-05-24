@@ -6,7 +6,7 @@ export const storePageContent = async (
   data: BrowsingHistoryItem
 ): Promise<{ success: boolean; message?: string }> => {
   try {
-    const response = await api.post("/content", data);
+    const response = await api.post("/api/data", data);
     return response.data;
   } catch (error) {
     console.error("Error storing content on server:", error);

@@ -1,16 +1,13 @@
 // Define interface for extracted page data
 interface ExtractedData {
-  title: string;
   url: string;
   content: string;
   timestamp: number;
+  // title field removed as it's not used in the new structure
 }
 
 // Helper function to extract main content from the page
 function extractPageContent(): ExtractedData {
-  // Get the page title
-  const title = document.title;
-
   // Get the page URL
   const url = window.location.href;
 
@@ -43,7 +40,6 @@ function extractPageContent(): ExtractedData {
   content = content.replace(/\s+/g, " ").trim();
 
   return {
-    title,
     url,
     content,
     timestamp: Date.now(),
