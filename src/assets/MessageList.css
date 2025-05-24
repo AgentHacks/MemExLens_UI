@@ -1,11 +1,15 @@
 .message-list {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background-color: #ffffff;
+  gap: 16px;
+  background: rgba(15, 15, 15, 0.9); /* Darker background */
+  scroll-behavior: smooth;
+  background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.07) 1%, transparent 5%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.07) 1%, transparent 5%);
+  background-size: 50px 50px;
 }
 
 .empty-state {
@@ -14,21 +18,54 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #9e9e9e;
+  color: rgba(255, 255, 255, 1); /* Full white for better contrast */
   text-align: center;
   padding: 0 24px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Stronger text shadow */
+}
+
+.empty-state p {
+  margin-bottom: 16px;
+  font-weight: 500; /* Slightly bolder text */
+}
+
+.empty-state ul {
+  background: rgba(40, 40, 40, 0.95); /* Darker, more opaque background */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* More visible border */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+}
+
+.empty-state li {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.empty-state li::before {
+  content: "•";
+  color: #bb86fc; /* Matching accent color */
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
 }
 
 .typing-indicator {
   display: flex;
   align-items: center;
   gap: 4px;
+  padding: 6px 10px;
 }
 
 .typing-indicator span {
   width: 8px;
   height: 8px;
-  background-color: #bdbdbd;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 50%;
   display: inline-block;
   animation: bounce 1.4s infinite ease-in-out both;

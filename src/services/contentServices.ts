@@ -17,13 +17,19 @@ export const storePageContent = async (
 // Search content using server-side LLM and vector DB
 export const searchContent = async (
   query: string
-): Promise<{ results: BrowsingHistoryItem[]; message?: string }> => {
+): Promise<{ data: string; message?: string }> => {
   try {
-    const response = await api.post("/search", { query });
-    return response.data;
+    // Using the exact payload structure specified
+    const payload = {
+      userId: "useraaditya123",
+      prompt: query,
+    };
+
+    const response = await api.post("/api/data/user", payload);
+    return response.data; // Expected to be { data: "Some string of data" }
   } catch (error) {
     console.error("Error searching content on server:", error);
-    return { results: [], message: "Error searching content on server" };
+    return { data: "", message: "Error searching content on server" };
   }
 };
 

@@ -113,7 +113,7 @@ chrome.runtime.onMessage.addListener(
           const historyItem: BrowsingHistoryItem = {
             timestamp: new Date(timestamp).toISOString(),
             data: {
-              userId: "user123", // You might want to replace this with actual user ID
+              userId: "useraaditya123", // You might want to replace this with actual user ID
               scrapedTextData: content.substring(0, 1000), // Limit content size for local storage
               url,
             },
@@ -137,7 +137,7 @@ chrome.runtime.onMessage.addListener(
               const serverHistoryItem: BrowsingHistoryItem = {
                 timestamp: new Date(timestamp).toISOString(),
                 data: {
-                  userId: "user123", // You might want to replace this with actual user ID
+                  userId: "useraaditya123", // You might want to replace this with actual user ID
                   scrapedTextData: content, // Send full content to server
                   url,
                 },
@@ -184,10 +184,11 @@ chrome.runtime.onMessage.addListener(
               const { searchContent } = await import(
                 "../services/contentServices.ts"
               );
-              const serverResults = await searchContent(query);
+              const serverResponse = await searchContent(query);
 
-              if (serverResults && serverResults.results) {
-                sendResponse({ results: serverResults.results });
+              if (serverResponse && serverResponse.data) {
+                // Create a simplified response with just the data string
+                sendResponse({ data: serverResponse.data });
               } else {
                 // Fallback to local search if server search fails
                 performLocalSearch(
@@ -228,11 +229,11 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
-// Helper function for local search
+// Helper function for local search - update to match new response format
 function performLocalSearch(
   query: string,
   history: BrowsingHistoryItem[],
-  sendResponse: (response?: { results: BrowsingHistoryItem[] }) => void
+  sendResponse: (response?: { data: string }) => void
 ) {
   const searchResults = history.filter((item) => {
     return item.data.scrapedTextData
@@ -240,5 +241,26 @@ function performLocalSearch(
       .includes(query.toLowerCase());
   });
 
-  sendResponse({ results: searchResults });
+  if (searchResults.length > 0) {
+    const formattedData = `Found ${searchResults.length} results in your local history.`;
+    sendResponse({ data: formattedData });
+  } else {
+    sendResponse({ data: "No results found in your local history." });
+  }
 }
+
+// Remove the existing chrome.action.onClicked listener (lines 244-270)
+// and replace with this:
+
+// Set up side panel
+chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+
+// Listen for extension icon clicks
+chrome.action.onClicked.addListener((_tab) => {
+  // Open the side panel when the extension icon is clicked
+  chrome.windows.getCurrent((window) => {
+    if (window.id) {
+      chrome.sidePanel.open({ windowId: window.id });
+    }
+  });
+});

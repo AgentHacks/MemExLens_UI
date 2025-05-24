@@ -1,19 +1,51 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 500px;
-  width: 350px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
+  height: 100vh;
+  width: 100%;
+  max-width: 350px;
+  background-color: rgba(25, 25, 25, 0.9); /* Darker, more opaque background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: "Inter", sans-serif;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* More visible border */
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+/* For Chrome sidebar */
+@media (max-width: 350px) {
+  .chat-container {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
 }
 
 .error-message {
-  background-color: #ffebee;
-  color: #c62828;
-  padding: 8px 16px;
+  background-color: rgba(255, 50, 50, 0.3); /* More visible error background */
+  color: #ff5757;
+  padding: 12px 16px;
   text-align: center;
   font-size: 14px;
+  animation: fadeIn 0.3s ease-in-out;
+  border-top: 1px solid rgba(255, 87, 87, 0.5); /* More visible border */
+  backdrop-filter: blur(5px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

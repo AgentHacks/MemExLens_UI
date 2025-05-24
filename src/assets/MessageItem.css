@@ -1,32 +1,93 @@
 .message {
-  max-width: 80%;
-  padding: 12px 16px;
-  border-radius: 16px;
+  max-width: 85%;
+  padding: 14px 18px;
+  border-radius: 20px;
   position: relative;
   word-wrap: break-word;
+  line-height: 1.5;
+  animation: messageAppear 0.3s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .user-message {
   align-self: flex-end;
-  background-color: #2196f3;
+  background: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%); /* Stronger gradient */
   color: white;
   border-bottom-right-radius: 4px;
+  margin-left: auto;
+  box-shadow: 0 4px 15px rgba(71, 118, 230, 0.5); /* More visible shadow */
 }
 
 .bot-message {
   align-self: flex-start;
-  background-color: #e0e0e0;
-  color: #212121;
+  background: rgba(30, 30, 30, 0.9); /* Darker, more opaque background */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: #ffffff; /* Pure white text */
   border-bottom-left-radius: 4px;
+  margin-right: auto;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* More visible border */
+}
+
+.message-content {
+  font-size: 15px;
+  white-space: pre-wrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Text shadow for better readability */
 }
 
 .message-timestamp {
-  font-size: 10px;
-  opacity: 0.7;
-  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.9; /* Increased from typical 0.7 for better visibility */
+  margin-top: 6px;
   text-align: right;
 }
 
 .loading-message {
-  padding: 8px 16px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border-bottom-left-radius: 4px;
+  max-width: 60%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-message::after,
+.bot-message::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width: 10px;
+  height: 10px;
+  z-index: -1;
+}
+
+.user-message::after {
+  right: -5px;
+  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  border-radius: 0 0 0 10px;
+}
+
+.bot-message::after {
+  left: -5px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 0 0 10px 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: none;
+  border-left: none;
 }
