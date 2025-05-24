@@ -55,23 +55,26 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
                     results.slice(0, 3).forEach(
                       (
                         result: {
-                          title: string;
-                          url: string;
+                          data: {
+                            url: string;
+                            scrapedTextData: string;
+                            userId: string;
+                          };
+                          timestamp: string;
                           snippets?: string[];
-                          content: string;
                         },
                         index: number
                       ) => {
-                        formattedResponse += `${index + 1}. **${
-                          result.title
+                        formattedResponse += `${index + 1}. **Page ${
+                          index + 1
                         }**\n`;
-                        formattedResponse += `   URL: ${result.url}\n`;
+                        formattedResponse += `   URL: ${result.data.url}\n`;
 
                         // Use snippets if available
                         if (result.snippets && result.snippets.length > 0) {
                           formattedResponse += `   Relevant content: "${result.snippets[0]}"\n\n`;
                         } else {
-                          formattedResponse += `   Preview: "${result.content.substring(
+                          formattedResponse += `   Preview: "${result.data.scrapedTextData.substring(
                             0,
                             150
                           )}..."\n\n`;
@@ -85,12 +88,9 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({
                   // Legacy formatting for local search results
                   const topResult = results[0];
                   resolve(
-                    `I found this in your browsing history:\n\nFrom: ${
-                      topResult.title
-                    }\nURL: ${topResult.url}\n\n${topResult.content.substring(
-                      0,
-                      200
-                    )}...`
+                    `I found this in your browsing history:\n\nURL: ${
+                      topResult.data.url
+                    }\n\n${topResult.data.scrapedTextData.substring(0, 200)}...`
                   );
                 }
               }
