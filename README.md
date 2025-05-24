@@ -212,6 +212,12 @@ This frontend application interacts with a backend server located at `https://me
 
 (Note: The backend server code is not part of this repository.)
 
-## Contributing
+## Contributors
 
-Details on how to contribute to the project will be added here. (Pull requests are welcome, please follow coding standards, etc.)
+- [aadityaKasbekar](https://github.com/aadityaKasbekar)
+- [kartikraut98](https://github.com/kartikraut98)
+- [sarthak-deshmukh1999](https://github.com/sarthak-deshmukh1999)
+
+## License
+
+[MIT License](LICENSE)
